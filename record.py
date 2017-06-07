@@ -7,6 +7,7 @@
 import time
 import os
 import datetime
+import commands
 
 pwd = os.system('pwd')  #カレントディレクトリ取得
 
@@ -23,7 +24,6 @@ class Recording:
         #音量調節のシェルスクリプト
         self.__gain = "sox {dir}{recFile} {dir}{gaindFile} gain -n".format(dir=self.__PATH,recFile=self.__recFile,gaindFile=self.gaindFile)
         self.filePath = self.__PATH + self.gaindFile
-
     def record(self):
         try:
             os.system(self.__sox)
@@ -36,6 +36,11 @@ class Recording:
         except:
             raise ValueError("Recording.gain is Failure.")
 
+    def getIPaddress(self,hostname):
+        try:
+            commands.getoutput("bash ./getIPaddress.sh {}".format(hostname))
+        except:
+            raise ValueError("Recording.getIPaddress is Failure.")
 
 
 # ファイル転送関数 ３回までトライする
@@ -52,6 +57,11 @@ def fileTransfer(filePath):
             raise ValueError("fileTransfer is Failure.")
     except:
         pass
+
+def sshCommand(filePath):
+    try:
+        command = "bash ./sshCommand.sh"
+
 
 
 try:

@@ -12,4 +12,4 @@ fi
 sudo hamachi list | grep ${TARGET} | sed -E 's/\ +/\n/g' | grep -E '^(([0-9]{1,3}\.){3}[0-9]{1,3})$' > ipaddress.txt
 
 # pythonに返すためのコマンド
-cat ipaddress.txt
+#cat ipaddress.txt
