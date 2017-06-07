@@ -43,26 +43,19 @@ class Recording:
             raise ValueError("Recording.getIPaddress is Failure.")
 
 
-# ファイル転送関数 ３回までトライする
 def fileTransfer(filePath):
     try:
-        command = "bash ./fileTransfer.sh " + filePath
-        #３回トライする
-        for i in range(0,2):
-            #成功したらループから抜ける ここは個人的に怪しいところ。シェルスクリプト内で明示的にexitコマンドを実装する必要あり。
-            if os.system(command) == 0:
-                break
-            time.sleep(1)
-        else:
-            raise ValueError("fileTransfer is Failure.")
+        command = "bash ./fileTransfer.sh {filePath}".format(filePath=filePath)
+        os.system(command)
     except:
-        pass
+        raise ValueError("fileTransfer is Failure.")
 
-def sshCommand(filePath):
+def sshCommand(user, filePath):
     try:
-        command = "bash ./sshCommand.sh"
-
-
+        command = "bash ./sshCommand.sh {user} {filePath}".format(user=user, filePath=filePath)
+        commands.getoutput(command)
+    except:
+        raise ValueError("record.py def sshCommand is Failure.")
 
 try:
     while True:
@@ -70,6 +63,8 @@ try:
         rec.record()
         rec.gain()
         fileTransfer(rec.filePath)
+        time.sleep(5)
+        sshCommand("pi", rec.gaindFile)
         time.sleep(5)
 
 except KeyboardInterrupt:

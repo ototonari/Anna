@@ -5,8 +5,8 @@
 #引数として受け取ったファイル名を再生させる
 
 USER="$1"
-HOST="$2"
-FILEPATH="$3"
+HOST=$(cat ipaddress.txt)
+FILEPATH="$2"
 
 ssh ${USER}@${HOST} "play ${FILEPATH}"
 
