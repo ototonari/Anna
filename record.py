@@ -33,6 +33,7 @@ class Recording:
     def gain(self):
         try:
             os.system(self.__gain)
+            
         except:
             raise ValueError("Recording.gain is Failure.")
 
