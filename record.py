@@ -15,8 +15,9 @@ pwd = os.system('pwd')  #カレントディレクトリ取得
 class Recording:
     def __init__(self):
         self.__PATH = "file/"
-        #録音開始時の年月日と時分を取得したファイル名(カプセル化)
-        self.__recFile = "{:%Y-%m%d-%H:%M}".format(datetime.datetime.now()) + ".wav"
+        #録音開始時の年月日と時分を取得したファイル名
+        self.date = "{:%Y-%m%d-%H:%M}".format(datetime.datetime.now())
+        self.__recFile = self.date + ".wav"
         #音量調節済みのファイル名(関数に渡す為公開する)
         self.gaindFile = "GD-" + self.__recFile
         #録音開始のシェルスクリプト
@@ -40,13 +41,14 @@ class Recording:
     def getIPaddress(self,hostname):
         try:
             commands.getoutput("bash ./getIPaddress.sh {}".format(hostname))
+            print("getIP DONE.")
         except:
             raise ValueError("Recording.getIPaddress is Failure.")
 
 
-def fileTransfer(filePath):
+def fileTransfer(file):
     try:
-        command = "bash ./fileTransfer.sh {filePath}".format(filePath=filePath)
+        command = "bash ./smartFileTransfer.sh {file} &".format(file=file)
         os.system(command)
     except:
         raise ValueError("fileTransfer is Failure.")
@@ -62,11 +64,9 @@ try:
     while True:
         rec = Recording()
         rec.record()
-        rec.gain()
-        fileTransfer(rec.filePath)
-        time.sleep(5)
-        sshCommand("pi", rec.gaindFile)
-        time.sleep(5)
+	rec.getIPaddress("tsubasa-server")
+        fileTransfer(rec.date)
+        time.sleep(2)
 
 except KeyboardInterrupt:
     print("stop")
