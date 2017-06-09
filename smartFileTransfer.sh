@@ -45,3 +45,9 @@ done
 
 # local .wav .mp3 remove
 rm file/tmp${FILE}.mp3 file/${FILE}.wav file/GD-${FILE}.mp3 file/${FILE}.mp3
+
+
+# play at remote server
+
+ssh pi@${IPADDRESS} "play GD-${FILE}.mp3"
+
