@@ -6,7 +6,7 @@
 TARGET="$1"
 
 if [ -z "$TARGET" ]; then
-	TARGET="tsubasa-server"
+    TARGET="tsubasa-server"
 fi
 # コマンドラインでハマチから相手先のIPアドレスを取得する
 sudo hamachi list | grep ${TARGET} | sed -E 's/\ +/\n/g' | grep -E '^(([0-9]{1,3}\.){3}[0-9]{1,3})$' > ipaddress.txt
