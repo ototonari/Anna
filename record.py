@@ -7,7 +7,7 @@
 import time
 import os
 import datetime
-import commands
+import subprocess
 
 # 録音ファイル生成用クラス
 class Recording:
@@ -27,7 +27,7 @@ class Recording:
 
     def getIPaddress(self,hostname):
         try:
-            commands.getoutput("bash ./getIPaddress.sh {}".format(hostname))
+            subprocess.getoutput("bash ./getIPaddress.sh {}".format(hostname))
             print("getIP DONE.")
         except:
             raise ValueError("Recording.getIPaddress is Failure.")
