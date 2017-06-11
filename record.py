@@ -57,7 +57,7 @@ def getIPaddress(file):
             smartFileTransfer(file, cnt)
 
         f.close()
-        #os.system("bash ./remove.sh {}".format(file))
+        os.system("bash ./remove.sh {}".format(file))
     except:
         raise ValueError("getIPaddress is Failure.")
 
