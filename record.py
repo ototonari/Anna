@@ -19,21 +19,15 @@ class Recording:
         self.__recFile = self.date + ".wav"
         #録音開始のシェルスクリプト
         self.__sox = "sox -c 2 -d {dir}{file} silence 1 00:00:00.5 0.2% 1 00:00:10 2%".format(dir=self.__PATH,file=self.__recFile)
-        
+    
+    # mainメソッド
     def record(self):
         try:
             os.system(self.__sox)
         except:
             raise ValueError("Recording.record is Failure.")
 
-    def getIPaddress(self,hostname):
-        try:
-            subprocess.getoutput("bash ./getIPaddress.sh {}".format(hostname))
-            print("getIP DONE.")
-        except:
-            raise ValueError("Recording.getIPaddress is Failure.")
-
-
+# 音量調節とファイル形式を変換する
 def exData(file):
     try:
         subprocess.getoutput("bash ./exData.sh {}".format(file))
@@ -42,18 +36,16 @@ def exData(file):
     except:
         raise ValueError("exData is Failure.")
 
+# 作業ディレクトリにあるhostlistを読み込みhamachi list からIPアドレスを割り出し、smartFileTransfer.sh にデータ名とIPを渡す
 def getIPaddress(file):
     try:
         
         exData(file)
 
+        # hostlist 内のホスト名を1行ずつ読み取り、smartFileTransfer.sh に渡す
         f = open("hostlist", 'r', encoding='utf-8')
-        
         for cnt, list in enumerate(f):
             cnt = subprocess.getoutput("bash ./getIPaddress.sh {}".format(list))
-            #p = threading.Thread(target=smartFileTransfer,args=(file))
-            #p.start()
-
             smartFileTransfer(file, cnt)
 
         f.close()
@@ -61,7 +53,7 @@ def getIPaddress(file):
     except:
         raise ValueError("getIPaddress is Failure.")
 
-
+# ファイル名とIPアドレスを受け取り、sftpでデータ送信後、sshで再生を指示する。
 def smartFileTransfer(file, ipaddress):
     try:
         command = "bash ./smartFileTransfer.sh {file} {ipaddress} &".format(file=file, ipaddress=ipaddress)
@@ -69,15 +61,13 @@ def smartFileTransfer(file, ipaddress):
     except:
         raise ValueError("smartFileTransfer is Failure.")
 
-
+# メイン処理 time.sleep(3)は処理を中断させるための間
 try:
     while True:
         rec = Recording()
         rec.record()
-        #time.sleep(1)
-        #exData(rec.date)
         getIPaddress(rec.date)
-        time.sleep(10)
+        time.sleep(3)
 
 except KeyboardInterrupt:
     print("stop")
