@@ -8,6 +8,7 @@ import time
 import os
 import datetime
 import subprocess
+import threading
 
 # 録音ファイル生成用クラス
 class Recording:
@@ -33,9 +34,37 @@ class Recording:
             raise ValueError("Recording.getIPaddress is Failure.")
 
 
-def smartFileTransfer(file):
+def exData(file):
     try:
-        command = "bash ./smartFileTransfer.sh {file} &".format(file=file)
+        subprocess.getoutput("bash ./exData.sh {}".format(file))
+        time.sleep(2)
+        print("exData DONE.")
+    except:
+        raise ValueError("exData is Failure.")
+
+def getIPaddress(file):
+    try:
+        
+        exData(file)
+
+        f = open("hostlist", 'r', encoding='utf-8')
+        
+        for cnt, list in enumerate(f):
+            cnt = subprocess.getoutput("bash ./getIPaddress.sh {}".format(list))
+            #p = threading.Thread(target=smartFileTransfer,args=(file))
+            #p.start()
+
+            smartFileTransfer(file, cnt)
+
+        f.close()
+        #os.system("bash ./remove.sh {}".format(file))
+    except:
+        raise ValueError("getIPaddress is Failure.")
+
+
+def smartFileTransfer(file, ipaddress):
+    try:
+        command = "bash ./smartFileTransfer.sh {file} {ipaddress} &".format(file=file, ipaddress=ipaddress)
         os.system(command)
     except:
         raise ValueError("smartFileTransfer is Failure.")
@@ -45,9 +74,10 @@ try:
     while True:
         rec = Recording()
         rec.record()
-        rec.getIPaddress("tsubasa-server")
-        smartFileTransfer(rec.date)
-        time.sleep(2)
+        #time.sleep(1)
+        #exData(rec.date)
+        getIPaddress(rec.date)
+        time.sleep(10)
 
 except KeyboardInterrupt:
     print("stop")

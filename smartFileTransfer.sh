@@ -1,8 +1,14 @@
 #!/bin/bash
 
+
+# $2 is nothing and done
+if [ -z "$2" ];then
+	exit 1
+fi
+
 # def var
 FILE=$1
-IPADDRESS=$(cat ipaddress.txt)
+IPADDRESS=$2
 # transfer file path
 FILEPATH="file/GD-${FILE}.mp3"
 
@@ -24,17 +30,19 @@ file_transfer ()
 }
 
 # .wav conversion .mp3 and gain
-sox file/${FILE}.wav file/${FILE}.mp3 
-sox file/${FILE}.mp3 file/tmp${FILE}.mp3 gain -n
-sox file/tmp${FILE}.mp3 file/GD-${FILE}.mp3 gain -l 5
+#sox file/${FILE}.wav file/${FILE}.mp3 
+#sox file/${FILE}.mp3 file/tmp${FILE}.mp3 gain -n
+#sox file/tmp${FILE}.mp3 file/GD-${FILE}.mp3 gain -l 5
 
 # transfer
-#file_transfer "$FILEPATH"
+
+MSG=`./expect.sh ${FILEPATH} ${IPADDRESS}`
 
 i=3
 while [ "$i" -ge 1 ]
 do
-	if file_transfer "$FILEPATH"; then
+#	if file_transfer "$FILEPATH"; then
+	if echo ${MSG}; then
 		echo "transfer DONE. ${i}"
 		i=0
 	else
@@ -44,7 +52,7 @@ do
 done
 
 # local .wav .mp3 remove
-rm file/tmp${FILE}.mp3 file/${FILE}.wav file/GD-${FILE}.mp3 file/${FILE}.mp3
+#rm file/tmp${FILE}.mp3 file/${FILE}.wav file/GD-${FILE}.mp3 file/${FILE}.mp3
 
 
 # play at remote server
