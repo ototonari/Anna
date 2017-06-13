@@ -15,7 +15,7 @@ class Recording:
     def __init__(self):
         self.__PATH = "file/"
         #録音開始時の年月日と時分を取得したファイル名
-        self.date = "{:%Y-%m%d-%H:%M}".format(datetime.datetime.now())
+        self.date = "{:%Y-%m-%d-%H:%M}".format(datetime.datetime.now())
         self.__recFile = self.date + ".wav"
         #録音開始のシェルスクリプト
         self.__sox = "sox -c 2 -d {dir}{file} silence 1 00:00:00.5 0.2% 1 00:00:10 2%".format(dir=self.__PATH,file=self.__recFile)
@@ -25,13 +25,14 @@ class Recording:
         try:
             os.system(self.__sox)
         except:
+            os.system("bash ./remove.sh {}".format(self.date))
             raise ValueError("Recording.record is Failure.")
 
 # 音量調節とファイル形式を変換する
 def exData(file):
     try:
         subprocess.getoutput("bash ./exData.sh {}".format(file))
-        time.sleep(2)
+        time.sleep(1)
         print("exData DONE.")
     except:
         raise ValueError("exData is Failure.")
@@ -49,7 +50,6 @@ def getIPaddress(file):
             smartFileTransfer(file, cnt)
 
         f.close()
-        os.system("bash ./remove.sh {}".format(file))
     except:
         raise ValueError("getIPaddress is Failure.")
 
