@@ -11,15 +11,9 @@ expect {
         send "yes\n"
         exp_continue
     }
-
-    "sftp" {
-        send "cd ~/Anna/file/\n"
-    }
-
     "sftp" {
         send "put ${FILE}\n"
     }
-
 }
 
 expect {
@@ -27,6 +21,7 @@ expect {
         exit 0
     }
 }
+
 
 
 
