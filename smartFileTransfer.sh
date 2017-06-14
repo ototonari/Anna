@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# -*- coding: utf-8 -*-
 
 # $2 is nothing and done
 if [ -z "$2" ];then
