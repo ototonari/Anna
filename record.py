@@ -9,16 +9,17 @@ import os
 import datetime
 import subprocess
 import threading
+import sys
 
 # 録音ファイル生成用クラス
 class Recording:
-    def __init__(self):
+    def __init__(self, startVal, endVal):
         self.__PATH = "file/"
         #録音開始時の年月日と時分を取得したファイル名
         self.date = "{:%Y-%m-%d-%H:%M}".format(datetime.datetime.now())
         self.__recFile = self.date + ".wav"
         #録音開始のシェルスクリプト
-        self.__sox = "sox -c 2 -d {dir}{file} silence 1 00:00:00.5 0.2% 1 00:00:10 2%".format(dir=self.__PATH,file=self.__recFile)
+        self.__sox = "sox -c 2 -d {dir}{file} silence 1 00:00:00.5 {sV}% 1 00:00:10 {eV}%".format(dir=self.__PATH,file=self.__recFile, sV=startVal, eV=endVal)
     
     # mainメソッド
     def record(self):
@@ -61,10 +62,19 @@ def smartFileTransfer(file, ipaddress):
     except:
         raise ValueError("smartFileTransfer is Failure.")
 
+# 引数として、録音開始ボリュームのパラメータを受け取る。{arg}%
+argvs = sys.argv  # コマンドライン引数を格納したリストの取得
+argc = len(argvs) # 引数の個数
+
+if (argc < 3):   # 引数の指定がない場合、start=0.2, end=2 を代入する
+    argvs.append("0.2")
+    argvs.append("2")
+
+
 # メイン処理 time.sleep(3)は処理を中断させるための間
 try:
     while True:
-        rec = Recording()
+        rec = Recording(argvs[1], argvs[2])
         rec.record()
         getIPaddress(rec.date)
         time.sleep(3)

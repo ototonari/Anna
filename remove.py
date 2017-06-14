@@ -35,9 +35,12 @@ for list in patternList:
         removeList.append(list)
 
 f = open('remove.log', 'a')
+f.write("START: {}\n".format(now_time))
+
 for value in removeList:
     f.write("{}\n".format(value))
     os.remove(value)
+f.write("END.\n")
 f.close()
 
 
