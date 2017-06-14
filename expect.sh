@@ -13,20 +13,14 @@ expect {
     }
 
     "sftp" {
-        send "put ${FILE}\n"
-    }
-
-}
-
-expect {
-    "sftp" {
-        send "cd ~/Anna/file/"
+        send "cd ~/Anna/file/\n"
         exp_continue
     }
 
     "sftp" {
-        send "put ${FILE}"
+        send "put ${FILE}\n"
     }
+
 }
 
 expect {
