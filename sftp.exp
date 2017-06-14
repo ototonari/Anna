@@ -12,7 +12,7 @@ expect {
         exp_continue
     }
     "sftp" {
-        send "cd /home/pi/Anna/file/\n"
+        send "cd /home/pi/Anna/\n"
     }
 }
 
