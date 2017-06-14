@@ -14,7 +14,6 @@ expect {
 
     "sftp" {
         send "cd ~/Anna/file/\n"
-        exp_continue
     }
 
     "sftp" {
