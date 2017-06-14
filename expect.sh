@@ -9,8 +9,13 @@ spawn env LANG=C /usr/bin/sftp pi@${IPADDRESS}
 expect {
     "(yes/no)?" {
         send "yes\n"
-        
+        exp_continue
     }
+
+    "sftp" {
+        send "put ${FILE}"
+    }
+
 }
 
 expect {
