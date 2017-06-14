@@ -15,7 +15,7 @@ FILEPATH="file/GD-${FILE}.mp3"
 
 # ファイル転送
 
-MSG=`./expect.sh ${FILEPATH} ${IPADDRESS}`
+MSG=`./sftp.exp ${FILEPATH} ${IPADDRESS}`
 
 i=3
 while [ "$i" -ge 1 ]
@@ -32,4 +32,5 @@ done
 
 # play at remote server
 
-ssh pi@${IPADDRESS} "play GD-${FILE}.mp3"
+SSH=`./ssh.exp ${FILEPATH} ${IPADDRESS}`
+echo ${SSH}
