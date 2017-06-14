@@ -13,7 +13,7 @@ expect {
     }
 
     "sftp" {
-        send "put ${FILE}"
+        send "put ${FILE}¥n"
     }
 
 }
