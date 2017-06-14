@@ -31,6 +31,6 @@ done
 
 
 # play at remote server
-
-SSH=`./ssh.exp ${FILEPATH} ${IPADDRESS}`
+REMOTEFILEPATH="GD-${FILE}.mp3"
+SSH=`./ssh.exp ${REMOTETILEPATH} ${IPADDRESS}`
 echo ${SSH}
