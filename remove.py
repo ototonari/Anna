@@ -1,48 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, timedelta
-import glob
+# DIR内の、引数の文字列に一致したファイルを削除する
+
 import sys
-import re
 import os
+import re
 
-# 説明しよう
-# このスクリプトを実行すると、./file/ 内にあるファイル一覧から
-# 一週間より古いデータを自動的に削除する。
-# ちなみに判断基準はファイル名である。
+def remove(filename):
 
-# 一週間より古いかどうか判断する基準データの作成
-now_time = datetime.now()
-limit_time = now_time - timedelta(weeks=1)
+    # target dir
+    DIR = "./file/"
+    
+    fileList = os.listdir(DIR)
+    pattern = re.compile(r'({})'.format(filename))
 
-
-# ./file/* ファイル一覧を取得する
-fileList = glob.glob("./file/*")
-
-# ファイル一覧を基準データと照らし合わせて、はみ出たデータを格納する
-pattern = r"(([0-9]{4})-([0-9]{2})-([0-9]{2}))"
-
-patternList = [n for n in fileList if re.search(pattern, n)]
-
-removeList = []
-
-for list in patternList:
-    m = re.search(pattern, list)
-    tmp_time = datetime.strptime(m.group(0), '%Y-%m-%d')
-    chk_date = tmp_time - limit_time
-    if 0 > chk_date.days:
-        removeList.append(list)
-
-f = open('remove.log', 'a')
-f.write("START: {}\n".format(now_time))
-
-for value in removeList:
-    f.write("{}\n".format(value))
-    os.remove(value)
-f.write("END.\n")
-f.close()
-
-
-
+    for file in fileList:
+        m = pattern.search(file)
+        if m:
+            os.remove("{dir}{file}".format(dir=DIR, file=m.string))
 
