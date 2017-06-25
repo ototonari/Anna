@@ -35,7 +35,7 @@ for list in patternList:
 
 pattern = r"[0-9]{2}:[0-9]{2}:[0-9]{2}"
 
-sortedTodayList = sorted(todayList, key=lambda x: datetime.strptime(re.search(pattern, x).group(0)¥, '%H:%M:%S.%f'))
+sortedTodayList = sorted(todayList, key=lambda x: datetime.strptime(re.search(pattern, x).group(0)¥, '%H:%M:%S'))
 print(sortedTodayList)
 
 
