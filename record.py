@@ -111,7 +111,9 @@ try:
         rec.record()
         #getIP_thread = threading.Thread(target=getIPaddress, name="main_loop", args=(rec.date,))
         #getIP_thread.start()
-        moveData(rec.date)
+        moveData_thread = threading.Thread(target=moveData, args=(rec.date,))
+        moveData_thread.start()
+        #moveData(rec.date)
         time.sleep(3)
 
 except KeyboardInterrupt:
