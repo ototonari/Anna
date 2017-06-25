@@ -40,11 +40,14 @@ def playList():
 
     # 確認　再生済みデータ
     if os.path.isfile("./playedList"):
+        # 再生済みデータをSET型に格納
         played = {}
         for line in open("./playedList", 'r'):
-            played.append(line)
-        print(played)
+            played += {line}
+        # 未再生のデータを抽出
+        newPlayList = [line for line in sortedTodayList if set(line) not in played]
+
+        return newPlayList    
 
     return sortedTodayList
 
-    
