@@ -49,6 +49,7 @@ def moveData(file):
         tmpDir = "file"
         dir = 'share'
         cmd = "sudo mv {tmpDir}/GD-{file}.mp3 {dir}/GD-{file}.mp3".format(tmpDir=tmpDir, dir=dir, file=file)
+        os.system(cmd)
         print("moveData DONE.")
     except:
         raise ValueError("moveData is Failure.")
