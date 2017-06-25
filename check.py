@@ -51,7 +51,8 @@ def playList():
         for line in sortedTodayList:
             if set(line) not in played:
                 newPlayList.append(line)
-        print("newPlayList\n" + newPlayList)
+        print("newPlayList")
+        print(newPlayList)
         return newPlayList    
     else:
         return sortedTodayList
