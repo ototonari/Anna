@@ -44,10 +44,11 @@ def playList():
         played = set()
         for line in open("./playedList", 'r'):
             played.add(line)
+        print(played)
         # 未再生のデータを抽出
         newPlayList = [line for line in sortedTodayList if set(line) not in played]
-        print(newPlayList)
+        #print(newPlayList)
         return newPlayList    
-
-    return sortedTodayList
+    else:
+        return sortedTodayList
 
