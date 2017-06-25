@@ -23,7 +23,7 @@ patternList = [n for n in fileList if re.search(pattern, n)]
 
 # 絞り込み　当日のデータかどうか
 todayList = []  # 本日の日付のデータパスを格納する
-now_time = datetime.now() - timedelta(days=3)
+now_time = datetime.now() # - timedelta(days=3) # 日付補正
 
 for list in patternList:
     m = re.search(pattern, list)
