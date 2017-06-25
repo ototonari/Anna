@@ -118,7 +118,7 @@ except KeyboardInterrupt:
     print("stop")
 
 except:
-    pass
+    exit()
 
 
 
