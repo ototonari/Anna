@@ -49,10 +49,9 @@ def playList():
         
         # 未再生のデータを抽出
         newPlayList = []
-        #newPlayList = [line for line in sortedTodayList if set(line) not in played]
-        if set(sortedTodayList[0]) in played:
-            print("True")
-        #return newPlayList    
+        newPlayList = [line for line in sortedTodayList if line not in played]
+        
+        return newPlayList    
     else:
         return sortedTodayList
 
