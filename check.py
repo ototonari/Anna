@@ -49,14 +49,9 @@ def playList():
         #print("played")
         #print(played)
         # 未再生のデータを抽出
-        newPlayList = []
         newPlayList = [line for line in sortedTodayList if line not in played]
-        # SET型を経由したため、再びソートする
-        sortedNewList = sorted(newPlayList, key=lambda x: datetime.strptime(re.search(pattern, x).group(0), '%H:%M:%S'))
 
-        print(sortedNewList)
-        print(newPlayList)
-        return sortedNewList
+        return newPlayList
     else:
         return sortedTodayList
 
