@@ -33,6 +33,7 @@ def playList():
         if ((tmp_time.year == now_time.year) and (tmp_time.month == now_time.month) and (tmp_time.day == now_time.day)):
             todayList.append(list)    
 
+
     # 分岐　再生済みデータがあれば、差分を返す。無ければそのまま返す。
     pattern = r"[0-9]{2}:[0-9]{2}:[0-9]{2}"
     # 並び替え　再生ファイルを古い順に並び替える
@@ -42,8 +43,9 @@ def playList():
     if os.path.isfile("./playedList"):
         # 再生済みデータをSET型に格納
         played = set()
-        for line in open("./playedList", 'r'):
-            played.add(line)
+        f = open("playedList", 'r', encoding="utf-8")
+        s = f.read()
+        played = {line for line in s.split(",") if (line != "")}
         print(played)
         # 未再生のデータを抽出
         newPlayList = []
