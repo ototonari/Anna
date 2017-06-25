@@ -46,11 +46,13 @@ def playList():
         f = open("playedList", 'r', encoding="utf-8")
         s = f.read()
         played = {line for line in s.split(",") if (line != "")}
-        
+        print("played")
+        print(played)
         # 未再生のデータを抽出
         newPlayList = []
         newPlayList = [line for line in sortedTodayList if line not in played]
-        
+        print("newPlayList")
+        print(newPlayList)
         return newPlayList    
     else:
         return sortedTodayList
