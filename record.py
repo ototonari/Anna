@@ -41,6 +41,20 @@ def exData(file):
     except:
         raise ValueError("exData is Failure.")
 
+# 録音後、共有ディレクトリにデータを移動させる
+def moveData(file):
+    try:
+        exData(file)
+        
+        tmpDir = "file"
+        dir = 'share'
+        cmd = "sudo mv {tmpDir}/GD-{file}.mp3 {dir}/GD-{file}.mp3".format(tmpDir=tmpDir, dir=dir, file=file)
+        print("moveData DONE.")
+    except:
+        raise ValueError("moveData is Failure.")
+
+
+
 # 複合関数 詳細は内容に併記
 def getIPaddress(file):
     try:
