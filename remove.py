@@ -19,4 +19,3 @@ def remove(filename):
         m = pattern.search(file)
         if m:
             os.remove("{dir}{file}".format(dir=DIR, file=m.string))
-

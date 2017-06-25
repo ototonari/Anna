@@ -12,30 +12,43 @@ import os
 # また、絞り込みとして、ファイル名が基準に満たしているかどうか、当日のデータであるか、再生していないかどうかで判断する。
 # ちなみに判断基準はファイル名である。
 
-# ./file/* ファイル一覧を取得する
-fileList = glob.glob("./share/*")
+def playList():
+    # ./file/* ファイル一覧を取得する
+    fileList = glob.glob("./share/*")
 
 
-# 絞り込み　ファイル名が基準通りか
-pattern = r"(([0-9]{4})-([0-9]{2})-([0-9]{2}))"
-patternList = [n for n in fileList if re.search(pattern, n)]
+    # 絞り込み　ファイル名が基準通りか
+    pattern = r"(([0-9]{4})-([0-9]{2})-([0-9]{2}))"
+    patternList = [n for n in fileList if re.search(pattern, n)]
 
 
-# 絞り込み　当日のデータかどうか
-todayList = []  # 本日の日付のデータパスを格納する
-now_time = datetime.now() # - timedelta(days=3) # 日付補正
+    # 絞り込み　当日のデータかどうか
+    todayList = []  # 本日の日付のデータパスを格納する
+    now_time = datetime.now() # - timedelta(days=3) # 日付補正
 
-for list in patternList:
-    m = re.search(pattern, list)
-    tmp_time = datetime.strptime(m.group(0), '%Y-%m-%d')
-    # 今日の日付と等しいかどうか評価する
-    if ((tmp_time.year == now_time.year) and (tmp_time.month == now_time.month) and (tmp_time.day == now_time.day)):
-        todayList.append(list)    
+    for list in patternList:
+        m = re.search(pattern, list)
+        tmp_time = datetime.strptime(m.group(0), '%Y-%m-%d')
+        # 今日の日付と等しいかどうか評価する
+        if ((tmp_time.year == now_time.year) and (tmp_time.month == now_time.month) and (tmp_time.day == now_time.day)):
+            todayList.append(list)    
 
-pattern = r"[0-9]{2}:[0-9]{2}:[0-9]{2}"
+    # 分岐　再生済みデータがあれば、差分を返す。無ければそのまま返す。
+    pattern = r"[0-9]{2}:[0-9]{2}:[0-9]{2}"
+    # 並び替え　再生ファイルを古い順に並び替える
+    sortedTodayList = sorted(todayList, key=lambda x: datetime.strptime(re.search(pattern, x).group(0), '%H:%M:%S'))
+    print(sortedTodayList) # check
 
-sortedTodayList = sorted(todayList, key=lambda x: datetime.strptime(re.search(pattern, x).group(0), '%H:%M:%S'))
-print(sortedTodayList)
+    # 確認　再生済みデータ
+    if os.path.isfile("./playedList"):
+        played = {}
+        for line in open("./playedList", 'r'):
+            played.append(line)
+        print(played)
+
+    return sortedTodayList
+
+print(playList())
 
 
 
