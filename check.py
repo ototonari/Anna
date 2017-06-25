@@ -30,7 +30,6 @@ for list in patternList:
     tmp_time = datetime.strptime(m.group(0), '%Y-%m-%d')
     # 今日の日付と等しいかどうか評価する
     if ((tmp_time.year == now_time.year) and (tmp_time.month == now_time.month) and (tmp_time.day == now_time.day)):
-        print(tmp_time.month, tmp_time.day)
         todayList.append(list)    
 
 pattern = r"[0-9]{2}:[0-9]{2}:[0-9]{2}"
