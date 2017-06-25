@@ -5,5 +5,8 @@ from check import playList
 import os
 import sys
 
+f = open("playedList", 'a', encoding="utf-8")
 for file in playList():
-   print(file)
+   print(file) # 再生したとみなす
+   f.write(file)
+f.close

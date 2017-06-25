@@ -47,40 +47,4 @@ def playList():
 
     return sortedTodayList
 
-print(playList())
-
-
-
-
-
-"""
-
-# 絞り込み　再生済みかどうか
-playedList = open(playedList.txt, )
-
-playList = []
-
-p = open('play.log', 'a')
-
-for list in patternList:
     
-
-removeList = []
-
-for list in patternList:
-    m = re.search(pattern, list)
-    tmp_time = datetime.strptime(m.group(0), '%Y-%m-%d')
-    chk_date = tmp_time - limit_time
-    if 0 > chk_date.days:
-        removeList.append(list)
-
-f = open('remove.log', 'a')
-f.write("START: {}\n".format(now_time))
-
-for value in removeList:
-    f.write("{}\n".format(value))
-    os.remove(value)
-f.write("END.\n")
-f.close()
-
-"""
