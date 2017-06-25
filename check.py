@@ -46,14 +46,17 @@ def playList():
         f = open("playedList", 'r', encoding="utf-8")
         s = f.read()
         played = {line for line in s.split(",") if (line != "")}
-        print("played")
-        print(played)
+        #print("played")
+        #print(played)
         # 未再生のデータを抽出
         newPlayList = []
         newPlayList = [line for line in sortedTodayList if line not in played]
-        print("newPlayList")
+        # SET型を経由したため、再びソートする
+        sortedNewList = sorted(newPlayList, key=lambda x: datetime.strptime(re.search(pattern, x).group(0), '%H:%M:%S'))
+
+        print(sortedNewList)
         print(newPlayList)
-        return newPlayList    
+        return sortedNewList
     else:
         return sortedTodayList
 
