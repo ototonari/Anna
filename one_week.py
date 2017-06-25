@@ -18,7 +18,7 @@ limit_time = now_time - timedelta(weeks=1)
 
 
 # ./file/* ファイル一覧を取得する
-fileList = glob.glob("./file/*")
+fileList = glob.glob("./share/*")
 
 # ファイル一覧を基準データと照らし合わせて、はみ出たデータを格納する
 pattern = r"(([0-9]{4})-([0-9]{2})-([0-9]{2}))"
@@ -38,8 +38,8 @@ f = open('remove.log', 'a')
 f.write("START: {}\n".format(now_time))
 
 for value in removeList:
-    f.write("{}\n".format(value))
-    os.remove(value)
+    #f.write("{}\n".format(value))
+    print(value)
 f.write("END.\n")
 f.close()
 
