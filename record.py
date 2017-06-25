@@ -19,9 +19,9 @@ class Recording:
         self.__PATH = "file/"
         #録音開始時の年月日と時分を取得したファイル名
         self.date = "{:%Y-%m-%d-%H:%M:%S}".format(datetime.datetime.now())
-        self.__recFile = self.date + ".mp3"
+        self.__recFile = self.date + ".wav"
         #録音開始のシェルスクリプト
-        self.__sox = "sox −r 44100 -c 2 -d {dir}{file} silence 1 00:00:00.5 {sV}% 1 00:00:02 {eV}%".format(dir=self.__PATH,file=self.__recFile, sV=startVal, eV=endVal)
+        self.__sox = "sox -c 2 -d {dir}{file} silence 1 00:00:00.5 {sV}% 1 00:00:02 {eV}%".format(dir=self.__PATH,file=self.__recFile, sV=startVal, eV=endVal)
     
     # mainメソッド
     def record(self):
