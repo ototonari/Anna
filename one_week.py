@@ -38,8 +38,8 @@ f = open('remove.log', 'a')
 f.write("START: {}\n".format(now_time))
 
 for value in removeList:
-    #f.write("{}\n".format(value))
-    print(value)
+    f.write("{}\n".format(value))
+    os.system("sudo rm {}".format(value))
 f.write("END.\n")
 f.close()
 
