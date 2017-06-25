@@ -8,5 +8,6 @@ import sys
 f = open("playedList", 'a', encoding="utf-8")
 for file in playList():
    print(file) # 再生したとみなす
-   f.write("{}\n".format(file)) # 改行追加して記述
+   #f.write("{}".format(file)) # 改行追加して記述
+   f.writelines(file)
 f.close
