@@ -46,7 +46,11 @@ def playList():
             played.add(line)
         print(played)
         # 未再生のデータを抽出
-        newPlayList = [line for line in sortedTodayList if set(line) not in played]
+        newPlayList = []
+        #newPlayList = [line for line in sortedTodayList if set(line) not in played]
+        for line in sortedTodayList:
+            if set(line) not in played:
+                newPlayList.append(line)
         #print(newPlayList)
         return newPlayList    
     else:
