@@ -37,7 +37,6 @@ def playList():
     pattern = r"[0-9]{2}:[0-9]{2}:[0-9]{2}"
     # 並び替え　再生ファイルを古い順に並び替える
     sortedTodayList = sorted(todayList, key=lambda x: datetime.strptime(re.search(pattern, x).group(0), '%H:%M:%S'))
-    print(sortedTodayList) # check
 
     # 確認　再生済みデータ
     if os.path.isfile("./playedList"):
