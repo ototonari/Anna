@@ -40,7 +40,7 @@ class Player():
                 self.fileList.append(file.group())
 
     def sort(self):
-        if self.logFile:
+        if self.fileList:
             pattern = r"[0-9]{2}:[0-9]{2}:[0-9]{2}"
             sortedList = sorted(self.fileList, key=lambda x: datetime.strptime(re.search(pattern, x).group(0), '%H:%M:%S'))
             self.playList = sortedList
@@ -58,9 +58,10 @@ class Player():
                 print("make dir ./download")
                 os.makedirs(self.localDir)
 
-            for file in self.playList:
-                cmd_getFile = "curl -o {ldir}{file} {url}{file} {auth}".format(ldir=self.localDir, url=self.url, file=file, auth=self.auth)
-                os.system(cmd_getFile)
+            if self.playList:
+                for file in self.playList:
+                    cmd_getFile = "curl -o {ldir}{file} {url}{file} {auth}".format(ldir=self.localDir, url=self.url, file=file, auth=self.auth)
+                    os.system(cmd_getFile)
         except:
             raise ValueError("download is Failure.")
 
