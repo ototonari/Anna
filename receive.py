@@ -7,7 +7,7 @@ from time import sleep
 
 now = datetime.now()
 try:
-    while now.hour <= 17:
+    while now.hour <= 16:
         p = Player()
         p.checkFilelist()
         p.pickUpLog()
@@ -20,4 +20,4 @@ try:
         now = datetime.now()
 
 except:
-    raise ValueError(" is Failure.")
+    raise ValueError("play is Failure.")
