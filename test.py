@@ -6,7 +6,7 @@ import os
 import sys
 from time import sleep
 from datetime import datetime, timedelta, time
-
+import remove
 
 class Player():
     def __init__(self):
@@ -57,7 +57,7 @@ class Player():
             if !(os.path.exists(self.localDir)):
                 print("make dir ./download")
                 os.makedirs(self.localDir)
-                
+
             for file in self.playList:
                 cmd_getFile = "curl -o {ldir}{file} {url}{file} {auth}".format(ldir=self.localDir, url=self.url, file=file, auth=self.auth)
                 os.system(cmd_getFile)
@@ -81,6 +81,7 @@ class Player():
                 for file in self.playedList:
                     cmd_deleteFile = "curl -X DELETE {url}{file} {auth}".format(url=self.url, file=file, auth=self.auth)
                     os.system(cmd_deleteFile)
+                    remove.remove(file, self.localDir)
 
         except:
             raise ValueError("delete is Failure.")

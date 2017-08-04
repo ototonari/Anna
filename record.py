@@ -29,7 +29,7 @@ class Recording:
             os.system(self.__sox)
             print("record DONE.")
         except:
-            remove.remove(self.date)
+            remove.remove(self.date, "")
             raise ValueError("Recording.record is Failure.")
 
 # 音量調節とファイル形式を変換する
@@ -83,7 +83,7 @@ def getIPaddress(file):
         print("transfer DONE.")
 
         # 転送が終わったらファイルを削除する
-        remove.remove(file)
+        remove.remove(file, "")
         print("remove DONE.")
     except:
         raise ValueError("getIPaddress is Failure.")
