@@ -55,6 +55,11 @@ def moveData(file):
         raise ValueError("moveData is Failure.")
 
 
+def upload(file):
+    cmd = "curl --upload {} `cat upload_url.private`".format(file)
+    os.system(cmd)
+    
+
 
 # 複合関数 詳細は内容に併記
 def getIPaddress(file):
@@ -91,9 +96,6 @@ def smartFileTransfer(file, ipaddress):
     except:
         raise ValueError("smartFileTransfer is Failure.")
 
-# メイン処理のループ判定変数。Control + C で止めた際にFalseになる
-CHECK = True
-
 
 # 引数として、録音開始ボリュームのパラメータを受け取る。{arg}%
 argvs = sys.argv  # コマンドライン引数を格納したリストの取得
@@ -106,13 +108,13 @@ if (argc < 3):   # 引数の指定がない場合、start=0.2, end=2 を代入�
 
 # メイン処理 time.sleep(3)は処理を中断させるための間
 try:
-    while CHECK:
+    while True:
         rec = Recording(argvs[1], argvs[2])
         rec.record()
         #getIP_thread = threading.Thread(target=getIPaddress, name="main_loop", args=(rec.date,))
         #getIP_thread.start()
-        moveData_thread = threading.Thread(target=moveData, args=(rec.date,))
-        moveData_thread.start()
+        upload_thread = threading.Thread(target=upload, args=(rec.date,))
+        upload_thread.start()
         #moveData(rec.date)
         time.sleep(3)
 
