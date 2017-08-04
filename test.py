@@ -54,7 +54,7 @@ class Player():
     def download(self):
         try:
             for file in self.playList:
-                cmd_getFile = "curl -O {url}{file} {auth} -o ./download/{file}".format(url=self.url, file=file, auth=self.auth)
+                cmd_getFile = "curl -o ./download/{file} {url}{file} {auth}".format(url=self.url, file=file, auth=self.auth)
                 os.system(cmd_getFile)
         except:
             raise ValueError("download is Failure.")
