@@ -18,12 +18,14 @@ class Player():
         self.url = "https://nanao.teracloud.jp/dav/dir/"
         self.user = "wec-test-1"
         self.password = "WECWECWECWECWEC"
+        self.auth = "-u {u}:{p}".format(u=self.user, p=self.password)
         self.log = "./log"
-        self.cmd = "curl -X PROPFIND -u {user}:{password} '{url}' -o {log}".format(user=self.user, password=self.password, url=self.url, log=self.log)
-    
+        self.cmd_getList = "curl -X PROPFIND {auth} '{url}' -o {log}".format(auth=self.auth, url=self.url, log=self.log)
+        
+
     def checkFilelist(self):
         try:
-            os.system(self.cmd)
+            os.system(self.cmd_getList)
         except:
             raise ValueError("checkFilelist is Failure.")
 
@@ -48,6 +50,14 @@ class Player():
                 self.playList = [line for line in self.fileList if line not in self.playedSet]
         except:
             pass
+
+    def download(self):
+        try:
+            for file in self.playList:
+                cmd_getFile = "curl -O {url}{file} {auth} -o ./download/{file}".format(url=self.url, file=file, auth=self.auth)
+                os.system(cmd_getFile)
+        except:
+            raise ValueError("download is Failure.")
 
     def play(self):
         try:
