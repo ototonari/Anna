@@ -14,6 +14,7 @@ class Player():
         self.fileList = []
         self.playedList = []
         self.pattern = re.compile('GD.+mp3')
+        self.localDir = "./download/"
         self.logFile = ""
         self.url = "https://nanao.teracloud.jp/dav/dir/"
         self.user = "wec-test-1"
@@ -54,16 +55,19 @@ class Player():
     def download(self):
         try:
             for file in self.playList:
-                cmd_getFile = "curl -o ./download/{file} {url}{file} {auth}".format(url=self.url, file=file, auth=self.auth)
+                cmd_getFile = "curl -o {ldir}{file} {url}{file} {auth}".format(ldir=self.localDir, url=self.url, file=file, auth=self.auth)
                 os.system(cmd_getFile)
         except:
             raise ValueError("download is Failure.")
 
     def play(self):
         try:
-            for file in self.playList:
-                os.system("play {}".format(file))
-                self.playedList.append(file)
+            if self.playList:
+                for file in self.playList:
+                    cmd_playFile = "play {ldir}{file}".format(ldir=self.localDir, file=file)
+                    os.system(cmd_playFile)
+                    self.playedList.append(file)
+                    sleep(1)
         except:
             raise ValueError("play is Failure.")
 
