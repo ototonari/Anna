@@ -56,7 +56,9 @@ def moveData(file):
 
 
 def upload(file):
-    cmd = "curl --upload {} `cat upload_url.private`".format(file)
+    exData(file)
+    tmpDir = "file"
+    cmd = "curl --upload {tmpDir}/GD-{file}.mp3 `cat upload_url.private`".format(tmpDir=tmpDir, file=file)
     os.system(cmd)
     
 
