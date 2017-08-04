@@ -116,11 +116,8 @@ try:
     while True:
         rec = Recording(argvs[1], argvs[2])
         rec.record()
-        #getIP_thread = threading.Thread(target=getIPaddress, name="main_loop", args=(rec.date,))
-        #getIP_thread.start()
         upload_thread = threading.Thread(target=upload, args=(rec.date,))
         upload_thread.start()
-        #moveData(rec.date)
         time.sleep(3)
 
 except KeyboardInterrupt:
