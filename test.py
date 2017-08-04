@@ -54,7 +54,7 @@ class Player():
 
     def download(self):
         try:
-            if !(os.path.exists(self.localDir)):
+            if os.path.exists(self.localDir) == False:
                 print("make dir ./download")
                 os.makedirs(self.localDir)
 
