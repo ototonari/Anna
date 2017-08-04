@@ -59,7 +59,8 @@ def upload(file):
     try:
         exData(file)
         tmpDir = "./file/"
-        cmd = "curl --upload {tmpDir}GD-{file}.mp3 `cat upload_url.private`".format(tmpDir=tmpDir, file=file)
+        #cmd = "curl --upload {tmpDir}GD-{file}.mp3 `cat upload_url.private`".format(tmpDir=tmpDir, file=file)
+        cmd = "curl -T {tmpDir}GD-{file}.mp3 https://nanao.teracloud.jp/dav/dir -u wec-test-1:WECWECWECWECWEC".format(tmpDir=tmpDir, file=file)
         os.system(cmd)
         remove.remove(file, "")
 
