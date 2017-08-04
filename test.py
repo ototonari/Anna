@@ -54,6 +54,10 @@ class Player():
 
     def download(self):
         try:
+            if !(os.path.exists(self.localDir)):
+                print("make dir ./download")
+                os.makedirs(self.localDir)
+                
             for file in self.playList:
                 cmd_getFile = "curl -o {ldir}{file} {url}{file} {auth}".format(ldir=self.localDir, url=self.url, file=file, auth=self.auth)
                 os.system(cmd_getFile)
@@ -73,6 +77,10 @@ class Player():
 
     def delete(self):
         try:
-            pass
+            if self.playedList:
+                for file in self.playedList:
+                    cmd_deleteFile = "curl -X DELETE {url}{file} {auth}".format(url=self.url, file=file, auth=self.auth)
+                    os.system(cmd_deleteFile)
+
         except:
             raise ValueError("delete is Failure.")

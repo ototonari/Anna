@@ -7,10 +7,10 @@ import sys
 import os
 import re
 
-def remove(filename):
+def remove(filename, directory):
 
     # target dir
-    DIR = "./file/"
+    DIR = directory or "./file/"
     
     fileList = os.listdir(DIR)
     pattern = re.compile(r'({})'.format(filename))
@@ -19,3 +19,4 @@ def remove(filename):
         m = pattern.search(file)
         if m:
             os.remove("{dir}{file}".format(dir=DIR, file=m.string))
+
