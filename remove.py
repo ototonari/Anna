@@ -20,3 +20,8 @@ def remove(filename, directory):
         if m:
             os.remove("{dir}{file}".format(dir=DIR, file=m.string))
 
+def removeAll(directory):
+    directory = directory or "./file/"
+    fileList = os.listdir(directory)
+    for file in fileList:
+        os.remove("{dir}{file}".format(dir=directory, file=file))
