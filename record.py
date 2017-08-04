@@ -56,12 +56,15 @@ def moveData(file):
 
 
 def upload(file):
-    exData(file)
-    tmpDir = "file"
-    cmd = "curl --upload {tmpDir}/GD-{file}.mp3 `cat upload_url.private`".format(tmpDir=tmpDir, file=file)
-    os.system(cmd)
-    
+    try:
+        exData(file)
+        tmpDir = "./file/"
+        cmd = "curl --upload {tmpDir}GD-{file}.mp3 `cat upload_url.private`".format(tmpDir=tmpDir, file=file)
+        os.system(cmd)
+        remove.remove(file, "")
 
+    except:
+        raise ValueError("upload is Failure.")
 
 # 複合関数 詳細は内容に併記
 def getIPaddress(file):
