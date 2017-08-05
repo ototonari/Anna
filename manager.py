@@ -7,6 +7,14 @@
 
 import os
 import sys
-import commands
+import subprocess
 from datetime import datetime, timedelta, time
 
+class ProcessManager():
+    def __init__(self):
+        
+
+if __name__ == '__main__':
+    cmd = 'ps aux | grep record.py'
+    result = subprocess.getoutput(cmd)
+    print(result)

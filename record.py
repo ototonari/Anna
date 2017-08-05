@@ -113,7 +113,7 @@ if (argc < 3):   # 引数の指定がない場合、start=0.2, end=2 を代入�
 
 # 初回起動時に./file ディレクトリ内を削除する
 try:
-    remove.removeAll("./file")
+    remove.removeAll("")
 except:
     pass
 
