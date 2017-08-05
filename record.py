@@ -10,7 +10,7 @@ import datetime
 import subprocess
 import threading
 import sys
-
+import shlex
 import remove
 
 # 録音ファイル生成用クラス
@@ -26,7 +26,9 @@ class Recording:
     # mainメソッド
     def record(self):
         try:
-            os.system(self.__sox)
+            #os.system(self.__sox)
+            args = shlex.split(self.__sox)
+            subprocess.run(args)
             print("record DONE.")
         except:
             remove.remove(self.date, "")
