@@ -7,6 +7,7 @@ import sys
 from time import sleep
 from datetime import datetime, timedelta, time
 import remove
+import subprocess, shlex
 
 class Player():
     def __init__(self):
@@ -26,7 +27,10 @@ class Player():
 
     def checkFilelist(self):
         try:
-            os.system(self.cmd_getList)
+            print("start checkFilelist")
+            #os.system(self.cmd_getList)
+            args = shlex.split(self.cmd_getList)
+            p = subprocess.Popen(args)
         except:
             raise ValueError("checkFilelist is Failure.")
 
