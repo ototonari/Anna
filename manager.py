@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# crontab によって５分置きに実行される
-# 録音端末の場合 record.py が起動されているか確認し終了していた場合は起動させる
-# 再生端末の場合 receive.py が起動されているか確認し終了していた場合は起動させる
-
 import subprocess, sys, shlex
 
 
@@ -17,16 +13,18 @@ def checkProcessId(script, file):
     else:
         return 0
 
-def generateProcess():
-    cmd = "python record.py"
+def generateProcess(script, file):
+    cmd = "{} {}".format(script, file)
     args = shlex.split(cmd)
     p = subprocess.Popen(args)
 
-argvs = sys.argv
-if (len(argvs) < 2):
-    argvs.append("python")
-    argvs.append("record.py")
+def killProcess(processId):
+    cmd = "kill {}".format(processId)
+    args = shlex.split(cmd)
+    p = subprocess.Popen(args)
 
-if checkProcessId(argvs[1], argvs[2]):
-    generateProcess()
+def shellCommand(commands):
+    args = shlex.split(commands)
+    result = subprocess.getoutput(args)
+    return result
 
