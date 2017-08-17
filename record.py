@@ -22,7 +22,7 @@ class Recording:
         self.date = "{:%Y-%m-%d-%H:%M:%S}".format(datetime.datetime.now())
         self.__recFile = self.date + ".wav"
         #録音開始のシェルスクリプト
-        self.__sox = "sox -c 2 -d {dir}{file} silence 1 00:00:00.5 {sV}% 1 00:00:02 {eV}%".format(dir=self.__PATH,file=self.__recFile, sV=startVal, eV=endVal)
+        self.__sox = "sox -c 2 -d {dir}{file} silence 1 00:00:00.5 {sV}% 1 00:00:02 {eV}% 2>/dev/null".format(dir=self.__PATH,file=self.__recFile, sV=startVal, eV=endVal)
         if os.path.exists(self.__PATH) == False:
                 print("make dir ./file")
                 os.makedirs(self.__PATH)
@@ -30,9 +30,10 @@ class Recording:
     # mainメソッド
     def record(self):
         try:
-            #os.system(self.__sox)
-            args = shlex.split(self.__sox)
-            subprocess.run(args)
+            os.system(self.__sox)
+            #args = shlex.split(self.__sox)
+            #subprocess.run(args)
+            #subprocess.run(self.__sox)
             print("record DONE.")
         except:
             remove.remove(self.date, "")
@@ -70,7 +71,7 @@ def upload(file):
         exData(file)
         tmpDir = "./file/"
         #cmd = "curl --upload {tmpDir}GD-{file}.mp3 `cat upload_url.private`".format(tmpDir=tmpDir, file=file)
-        cmd = "curl -T {tmpDir}GD-{file}.mp3 https://nanao.teracloud.jp/dav/dir/GD-{file}.mp3 -u wec-test-1:WECWECWECWECWEC".format(tmpDir=tmpDir, file=file)
+        cmd = "curl --silent -T {tmpDir}GD-{file}.mp3 https://nanao.teracloud.jp/dav/dir/GD-{file}.mp3 -u wec-test-1:WECWECWECWECWEC".format(tmpDir=tmpDir, file=file)
         os.system(cmd)
         remove.remove(file, "")
 
