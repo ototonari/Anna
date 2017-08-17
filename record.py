@@ -12,6 +12,7 @@ import threading
 import sys
 import shlex
 import remove
+import traceback
 
 # 録音ファイル生成用クラス
 class Recording:
@@ -22,7 +23,10 @@ class Recording:
         self.__recFile = self.date + ".wav"
         #録音開始のシェルスクリプト
         self.__sox = "sox -c 2 -d {dir}{file} silence 1 00:00:00.5 {sV}% 1 00:00:02 {eV}%".format(dir=self.__PATH,file=self.__recFile, sV=startVal, eV=endVal)
-    
+        if os.path.exists(self.__PATH) == False:
+                print("make dir ./file")
+                os.makedirs(self.__PATH)
+
     # mainメソッド
     def record(self):
         try:
@@ -32,7 +36,9 @@ class Recording:
             print("record DONE.")
         except:
             remove.remove(self.date, "")
-            raise ValueError("Recording.record is Failure.")
+
+            sys.stderr.write(datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+            traceback.print_exc(file=sys.stderr)
 
 # 音量調節とファイル形式を変換する
 def exData(file):
@@ -41,7 +47,8 @@ def exData(file):
         #time.sleep(1)
         print("exData DONE.")
     except:
-        raise ValueError("exData is Failure.")
+        sys.stderr.write(datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+        traceback.print_exc(file=sys.stderr)
 
 # 録音後、共有ディレクトリにデータを移動させる
 def moveData(file):
@@ -54,7 +61,8 @@ def moveData(file):
         os.system(cmd)
         print("moveData DONE.")
     except:
-        raise ValueError("moveData is Failure.")
+        sys.stderr.write(datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+        traceback.print_exc(file=sys.stderr)
 
 
 def upload(file):
@@ -67,7 +75,8 @@ def upload(file):
         remove.remove(file, "")
 
     except:
-        raise ValueError("upload is Failure.")
+        sys.stderr.write(datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+        traceback.print_exc(file=sys.stderr)
 
 # 複合関数 詳細は内容に併記
 def getIPaddress(file):
@@ -92,7 +101,8 @@ def getIPaddress(file):
         remove.remove(file, "")
         print("remove DONE.")
     except:
-        raise ValueError("getIPaddress is Failure.")
+        sys.stderr.write(datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+        traceback.print_exc(file=sys.stderr)
 
 # ファイル名とIPアドレスを受け取り、sftpでデータ送信後、sshで再生を指示する。
 def smartFileTransfer(file, ipaddress):
@@ -102,7 +112,8 @@ def smartFileTransfer(file, ipaddress):
         os.system(command)
         print("DONE.{0}.{1}".format(file, ipaddress))
     except:
-        raise ValueError("smartFileTransfer is Failure.")
+        sys.stderr.write(datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+        traceback.print_exc(file=sys.stderr)
 
 
 # 引数として、録音開始ボリュームのパラメータを受け取る。{arg}%
@@ -132,7 +143,8 @@ except KeyboardInterrupt:
     print("stop")
 
 except:
-    exit()
+    sys.stderr.write(datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+    traceback.print_exc(file=sys.stderr)
 
 
 

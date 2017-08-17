@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import subprocess, sys, shlex, traceback
+import subprocess, sys, shlex, traceback, datetime
 
 def checkProcessId(script, file):
     awk = "awk '$11 ~ /^%s$/ && $12 ~ /^%s$/ {print $2}'" % (script, file)
@@ -27,9 +27,8 @@ def generateProcess(args):
             print("don't generateProcess. no argument.")
 
     except:
-        print(sys.exc_info()[0])
-        traceback.print_exc(file=sys.stdout)
-        pass
+        sys.stderr.write(datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+        traceback.print_exc(file=sys.stderr)
 
 
 def killProcess(processId):
@@ -48,6 +47,7 @@ def shellCommand(commands):
     args = shlex.split(commands)
     result = subprocess.getoutput(args)
     return result
+
 
 
 try:
@@ -70,8 +70,10 @@ try:
 
 except IndexError:
     print(sys.exc_info()[0])
-    print("python manager.py order script filename")
+    print("usage: manager.py - generate or kill or killing - scriptname - filename")
+    print("exp) python manager.py generate python record.py")
+    sys.stderr.write(datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+    traceback.print_exc(file=sys.stderr)
 except:
-    print(sys.exc_info()[0])
-    traceback.print_exc(file=sys.stdout)
-    pass
+    sys.stderr.write(datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+    traceback.print_exc(file=sys.stderr)

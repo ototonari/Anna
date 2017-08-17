@@ -3,7 +3,7 @@
 
 import re
 import os
-import sys
+import sys, traceback
 from time import sleep
 from datetime import datetime, timedelta, time
 import remove
@@ -22,7 +22,7 @@ class Player():
         self.password = "WECWECWECWECWEC"
         self.auth = "-u {u}:{p}".format(u=self.user, p=self.password)
         self.log = "./log"
-        self.cmd_getList = "curl -X PROPFIND {auth} '{url}' -o {log}".format(auth=self.auth, url=self.url, log=self.log)
+        self.cmd_getList = "curl --silent -X PROPFIND {auth} '{url}' -o {log}".format(auth=self.auth, url=self.url, log=self.log)
         
 
     def checkFilelist(self):
@@ -30,9 +30,10 @@ class Player():
             print("start checkFilelist")
             #os.system(self.cmd_getList)
             args = shlex.split(self.cmd_getList)
-            p = subprocess.Popen(args)
+            p = subprocess.run(args)
         except:
-            raise ValueError("checkFilelist is Failure.")
+            sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+            traceback.print_exc(file=sys.stderr)
 
     def pickUpLog(self):
         with open(self.log, 'r') as file:
@@ -49,6 +50,7 @@ class Player():
             sortedList = sorted(self.fileList, key=lambda x: datetime.strptime(re.search(pattern, x).group(0), '%H:%M:%S'))
             self.playList = sortedList
     
+    #書きかけ　要は再生済みと未再生を振り分けて再生済みリストを作るメソッド。再生済みデータはピクル等を使う予定
     def divide(self):
         try:
             if self.fileList:
@@ -67,7 +69,8 @@ class Player():
                     cmd_getFile = "curl -o {ldir}{file} {url}{file} {auth}".format(ldir=self.localDir, url=self.url, file=file, auth=self.auth)
                     os.system(cmd_getFile)
         except:
-            raise ValueError("download is Failure.")
+            sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+            traceback.print_exc(file=sys.stderr)
 
     def play(self):
         try:
@@ -78,7 +81,8 @@ class Player():
                     self.playedList.append(file)
                     sleep(1)
         except:
-            raise ValueError("play is Failure.")
+            sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+            traceback.print_exc(file=sys.stderr)
 
     def delete(self):
         try:
@@ -89,4 +93,5 @@ class Player():
                     remove.remove(file, self.localDir)
 
         except:
-            raise ValueError("delete is Failure.")
+            sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+            traceback.print_exc(file=sys.stderr)
