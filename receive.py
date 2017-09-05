@@ -13,10 +13,11 @@ try:
         p.checkFilelist()
         p.pickUpLog()
         p.extraction()
+        p.importPlayedList()
+        p.divide()
         p.sort()
         p.download()
         p.play()
-        p.delete()
         sleep(60)
         now = datetime.now()
 
