@@ -15,7 +15,7 @@ class Player():
     def __init__(self):
         self.playList = []
         self.fileList = []
-        self.playedSet = {}
+        self.playedSet = set()
         self.playedList = []
         self.pattern = re.compile('GD.+mp3')
         self.pickle = "./play.playedList"
@@ -132,6 +132,52 @@ class Player():
                     os.system(cmd_deleteFile)
                     remove.remove(file, self.localDir)
 
+        except:
+            sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+            traceback.print_exc(file=sys.stderr)
+
+    # 再生済みリストを読み込み、その音声データがローカルに存在していた場合は削除する
+    def deleteLocal(self):
+        try:
+            if self.playedList:
+                for file in self.playedList:
+                    if os.path.exists("{dir}{file}".format(dir=self.localDir, file=file)):
+                        remove.remove(file, self.localDir)
+
+        except:
+            sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+            traceback.print_exc(file=sys.stderr)
+
+    # 注意！！このメソッドを呼び出した場合、play.playedListとオブジェクトのplayedListを削除します。
+    # またteraCloud内のデータもplayedListに含まれる分を削除するため、初期化する際のみ呼び出してください。
+    # メインループに組み込まないでください！！！！！
+    def deleteRemote(self):
+        try:
+            self.importPlayedList()
+            if self.playedList:
+                for file in self.playedList:
+                    cmd_deleteFile = "curl -X DELETE {url}{file} {auth}".format(url=self.url, file=file, auth=self.auth)
+                    os.system(cmd_deleteFile)
+            if os.path.exists(self.pickle):
+                os.remove(self.pickle)
+
+        except:
+            sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+            traceback.print_exc(file=sys.stderr)
+
+    # 渡された引数に応じて、関数を呼び出す
+    def checkArgs(self):
+        try:
+            params = sys.argv
+            if params > 1:
+                # 引数に応じて処理する
+
+                # params[1] == delete ならクラウドストレージから再生済みのデータを削除する
+                if params[1] == 'delete':
+                    self.deleteRemote()
+            
+                
+            
         except:
             sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
             traceback.print_exc(file=sys.stderr)
