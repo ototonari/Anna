@@ -20,6 +20,7 @@ try:
         p.sort()
         p.download()
         p.play()
+        p.exportPlayedList()
         p.deleteLocal()
         sleep(60)
         now = datetime.now()

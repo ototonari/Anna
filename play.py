@@ -74,12 +74,22 @@ class Player():
             traceback.print_exc(file=sys.stderr)
 
     # ファイル一覧を日時でソートする
-    def sort(self):
+    def oldSort(self):
         try:
             if self.fileList:
                 pattern = r"[0-9]{2}:[0-9]{2}:[0-9]{2}"
                 sortedList = sorted(self.fileList, key=lambda x: datetime.strptime(re.search(pattern, x).group(0), '%H:%M:%S'))
                 self.fileList = sortedList
+        except:
+            sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+            traceback.print_exc(file=sys.stderr)
+
+    def sort(self):
+        try:
+            if self.playList:
+                tmpList = self.playList
+                self.playList = sorted(tmpList)
+
         except:
             sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
             traceback.print_exc(file=sys.stderr)
@@ -176,7 +186,7 @@ class Player():
                 if params[1] == 'delete':
                     self.deleteRemote()
             
-                
+    
             
         except:
             sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
