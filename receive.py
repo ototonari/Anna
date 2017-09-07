@@ -22,7 +22,7 @@ try:
         p.play()
         p.exportPlayedList()
         p.deleteLocal()
-        sleep(60)
+        sleep(30)
         now = datetime.now()
 
 except:
@@ -30,12 +30,3 @@ except:
     traceback.print_exc(file=sys.stderr)
     pass
 
-
-try:
-    if now.hour >= workTime and len(sys.argv) > 1:
-        p = Player()
-        p.checkArgs()
-
-except:
-    sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
-    traceback.print_exc(file=sys.stderr)

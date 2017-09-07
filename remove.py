@@ -7,8 +7,6 @@ import sys, os, re, traceback
 from time import sleep
 from datetime import datetime, timedelta, time
 from play import Player
-import subprocess, shlex
-import pickle
 
 
 def remove(filename, directory):
