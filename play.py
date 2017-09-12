@@ -173,6 +173,7 @@ class Player():
                 for file in self.playedList:
                     cmd_deleteFile = "curl -X DELETE {url}{file} {auth}".format(url=self.url, file=file, auth=self.auth)
                     os.system(cmd_deleteFile)
+            self.delete()
             if os.path.exists(self.pickle):
                 os.remove(self.pickle)
 
