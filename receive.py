@@ -21,7 +21,7 @@ try:
         p.download()
         p.play()
         p.exportPlayedList()
-        p.deleteLocal()
+        p.delete()
         sleep(30)
         now = datetime.now()
 

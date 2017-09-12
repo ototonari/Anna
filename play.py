@@ -133,21 +133,10 @@ class Player():
             sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
             traceback.print_exc(file=sys.stderr)
 
-    # 再生したデータをteraCloudとローカルファイルから削除する
-    def delete(self):
-        try:
-            if self.playedList:
-                for file in self.playedList:
-                    cmd_deleteFile = "curl -X DELETE {url}{file} {auth}".format(url=self.url, file=file, auth=self.auth)
-                    os.system(cmd_deleteFile)
-                    remove.remove(file, self.localDir)
 
-        except:
-            sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
-            traceback.print_exc(file=sys.stderr)
-
+    # receive.py 用メソッド
     # 再生済みリストを読み込み、その音声データがローカルに存在していた場合は削除する
-    def deleteLocal(self):
+    def delete(self):
         try:
             if self.playedList:
                 for file in self.playedList:
@@ -158,7 +147,23 @@ class Player():
             sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
             traceback.print_exc(file=sys.stderr)
 
-    # 注意！！このメソッドを呼び出した場合、play.playedListとオブジェクトのplayedListを削除します。
+
+    # manager.py 用メソッド
+    # ローカルのpickleファイルとダウンロードデータを削除する
+    def deleteLocal(self):
+        try:
+            self.importPlayedList()
+            self.delete()
+            if os.path.exists(self.pickle):
+                os.remove(self.pickle)
+
+        except:
+            sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+            traceback.print_exc(file=sys.stderr)
+
+
+    # manager.py 用メソッド
+    # 注意！！このメソッドを呼び出した場合、play.playedListを削除します。
     # またteraCloud内のデータもplayedListに含まれる分を削除するため、初期化する際のみ呼び出してください。
     # メインループに組み込まないでください！！！！！
     def deleteRemote(self):
