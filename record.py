@@ -22,7 +22,8 @@ class Recording:
         self.date = "{:%Y-%m-%d-%H:%M:%S}".format(datetime.datetime.now())
         self.__recFile = self.date + ".wav"
         #録音開始のシェルスクリプト
-        self.__sox = "sox -c 2 -d {dir}{file} silence 1 00:00:00.5 {sV}% 1 00:00:02 {eV}% 2>/dev/null".format(dir=self.__PATH,file=self.__recFile, sV=startVal, eV=endVal)
+        #self.__sox = "sox -c 2 -d {dir}{file} silence 1 00:00:00.5 {sV}% 1 00:00:02 {eV}% 2>/dev/null".format(dir=self.__PATH,file=self.__recFile, sV=startVal, eV=endVal)
+        self.__sox = "sox -c 2 -d {dir}{file} silence 1 00:00:00.5 {sV}% 1 00:00:02 {eV}%".format(dir=self.__PATH,file=self.__recFile, sV=startVal, eV=endVal)
         if os.path.exists(self.__PATH) == False:
                 print("make dir ./file")
                 os.makedirs(self.__PATH)

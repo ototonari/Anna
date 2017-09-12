@@ -6,7 +6,7 @@
 import sys, os, re, traceback
 from time import sleep
 from datetime import datetime, timedelta, time
-from play import Player
+#from play import Player
 
 
 def remove(filename, directory):
@@ -30,11 +30,11 @@ def removeAll(directory):
 
 
     # main
-try:
-    if __name__ == '__main__':
-        p = Player()
-        p.checkArgs
-
-except:
-    sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
-    traceback.print_exc(file=sys.stderr)
+#try:
+#    if __name__ == '__main__':
+#        p = Player()
+#        p.checkArgs
+#
+#except:
+#    sys.stderr.write(datetime.now().strftime("[%Y-%m-%d %H:%M:%S]\n"))
+#    traceback.print_exc(file=sys.stderr)
