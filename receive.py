@@ -6,7 +6,7 @@ from play import Player
 from time import sleep
 import sys, traceback
 
-workTime = 18
+workTime = 23
 
 now = datetime.now()
 try:
