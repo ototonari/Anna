@@ -26,7 +26,7 @@ class Player():
         self.password = "WECWECWECWECWEC"
         self.auth = "-u {u}:{p}".format(u=self.user, p=self.password)
         self.log = "./log"
-        self.cmd_getList = "curl --silent -X PROPFIND {auth} '{url}' -o {log}".format(auth=self.auth, url=self.url, log=self.log)
+        self.cmd_getList = "curl --silent -X PROPFIND {auth} '{url}' -H 'Depth: 1' -o {log}".format(auth=self.auth, url=self.url, log=self.log)
         
     # teraCloudのファイルの一覧を取得し ./log に出力
     def checkFilelist(self):
